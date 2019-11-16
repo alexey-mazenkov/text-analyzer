@@ -16,7 +16,8 @@ def rus_text(text):
     count_syllables = 0
 
     for i in range(len(text)):
-        if text[i] == '.' or text[i] == '!' or text[i] == '?':
+        if text[i] == '.' or text[i] == '!' or text[i] == '?':                  # Count sentenses by punctuation mark
+                                                                                # in text.
             if text[i] == '.' and text[i - 1].isalnum():
                 if not text[i].isalnum():
                     count_sentens += 1
@@ -25,10 +26,12 @@ def rus_text(text):
             elif text[i] == '!' or text[i] == '?':
                 count_sentens += 1
 
-        if text[i] == ' ':
-            count_words += 1
+        if text[i] == ' ':                                                      # Count words by space in text.
+            if len(text) - i != 1:
+                if not text[i + 1].isalnum() and not text[i - 1].isalnum:
+                    count_words += 1
 
-        if text[i] in dt.vowels:
+        if text[i] in dt.vowels_ru:                                             # Count syllables by vowels in text.
             count_syllables += 1
 
     if count_words > 0:
@@ -38,8 +41,8 @@ def rus_text(text):
     print('Слов:', count_words)
     print('Слогов:', count_syllables)
     # print('Средняя длина предложения в словах:', ASL)
-    # print('Средняя длина слова в слогах:', ASW)
     # print('Индекс удобочитаемости Флеша:', FRE)
+
 
 
 def en_text(text):
