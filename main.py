@@ -8,18 +8,13 @@ import analysis as al
 # TODO(Mkhlva): Здесь должна быть проверка того, на каком языке введён текст.
 text = input()
 cnt = len(text)
-for vs in dictionaries.vowels_ru:
-    text = text.replace(vs, '')
+for vowels in dictionaries.vowels_ru:
+    text = text.replace(vowels, '')
 if len(text) == cnt:
-    print('Язык: en')
+    al.en_text(text)
 else:
-    print('Язык: ru')
+    al.en_text(text)
 
 
 
 
-# TODO(Mkhlva): Здесь должны вызываться функции анализа(с учетом языка введённого текста).
-
-al.en_text(text)
-
-al.rus_text(text)
