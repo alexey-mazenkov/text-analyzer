@@ -1,6 +1,6 @@
 # TEXT ANALYZER.
-# Developers: A.Mazenkov
-#             K.Kravtsov 55%
+# Developers: A.Mazenkov -- 70%
+#             K.Kravtsov  -- 55%
 #             A.Mikhailov
 import dictionaries as dt
 import analysis as al
@@ -23,4 +23,4 @@ elif en > rus:
     al.en_text(text)
 
 while rus == en:
-    text = input('Введите текст:')
+    text = input('Введите текст:').lower()
