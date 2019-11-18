@@ -1,6 +1,6 @@
 # TEXT ANALYZER.
 # Developers: A.Mazenkov
-#             K.Kravtsov
+#             K.Kravtsov 55%
 #             A.Mikhailov
 import dictionaries
 import analysis as al
