@@ -1,5 +1,5 @@
-import textblob
-import dostoevsky
+from textblob import TextBlob
+
 import localization as lc
 import dictionaries as dt
 
@@ -9,15 +9,14 @@ def rus_text(text):
     :param text:
     :return:
     """
-    # Function for analyzing Russian text (dostoevsky module).
 
     count_sentens = 0
     count_words = 0
     count_syllables = 0
 
-    # Count sentences for punctuation marks
-    # Count the syllables by vowels
-    # Count the words by the number of spaces
+    # Count sentences for punctuation marks.
+    # Count the syllables by vowels.
+    # Count the words by the number of spaces.
     for i in range(len(text)):
         if text[i] == '.' or text[i] == '!' or text[i] == '?':
             if text[i] == '.' and not text[i - 1] in dt.numbers and text[i - 1] != '.':
@@ -28,15 +27,15 @@ def rus_text(text):
         if text[i] == ' ':
             count_words += 1
 
-        if text[i].lower() in dt.vowels_en:
+        if text[i] in dt.vowels_ru:
             count_syllables += 1
 
     if count_words > 0:
         count_words += 1
 
-    asw = float(count_syllables / count_words)          # Average length of a word in syllables
-    asl = float(count_words / count_sentens)            # Average sentence length in words
-    fre = float(206.835 - 1.015 * asl - 84.6 * asw)     # Flash Readability Index
+    asw = float(count_syllables / count_words)           # Average length of a word in syllables.
+    asl = float(count_words / count_sentens)             # Average sentence length in words.
+    fre = float(206.835 - 1.3 * asl - 60.1 * asw)        # Flash Readability Index.
 
     print('Предложений:', count_sentens)
     print('Слов:', count_words)
@@ -44,25 +43,31 @@ def rus_text(text):
     print('Средняя длина предложения в словах:', asl)
     print('Средняя длина слова в слогах:', asw)
     print('Индекс удобочитаемости Флеша:', fre)
-    print('Предложений:', count_sentens)
-    print('Слов:', count_words)
-    print('Слогов:', count_syllables)
 
+    fre = round(fre)
+
+    if fre >= 100:
+        print('Текст читается очень легко')
+    elif fre >= 65:
+        print('Простой для восприятия текст')
+    elif fre >= 30:
+        print('Текст читается сложно')
+    else:
+        print('Очень сложный текст')
 
 def en_text(text):
     """
     :param text:
     :return:
     """
-    # Function for parsing English text (textblob module).
 
     count_sentens = 0
     count_words = 0
     count_syllables = 0
 
-    # Count sentences for punctuation marks
-    # Count the syllables by vowels
-    # Count the words by the number of spaces
+    # Count sentences for punctuation marks.
+    # Count the syllables by vowels.
+    # Count the words by the number of spaces.
     for i in range(len(text)):
         if text[i] == '.' or text[i] == '!' or text[i] == '?':
             if text[i] == '.' and not text[i - 1] in dt.numbers and text[i - 1] != '.':
@@ -79,9 +84,22 @@ def en_text(text):
     if count_words > 0:
         count_words += 1
 
-    asw = float(count_syllables / count_words)          # Average length of a word in syllables
-    asl = float(count_words / count_sentens)            # Average sentence length in words
-    fre = float(206.835 - 1.015 * asl - 84.6 * asw)     # Flash Readability Index
+    asw = float(count_syllables / count_words)          # Average length of a word in syllables.
+    asl = float(count_words / count_sentens)            # Average sentence length in words.
+    fre = float(206.835 - 1.015 * asl - 84.6 * asw)     # Flash Readability Index.
+
+    analysis = TextBlob(text)
+    print(analysis.sentiment)
+
+    subjective = 100 - analysis.sentiment.subjectivity * 100
+    polarity = analysis.sentiment.polarity
+
+    if polarity > 0.5:
+        polarity = 'позитивный'
+    elif polarity > -0.5:
+        polarity = 'нейтральный'
+    else:
+        polarity = 'негативный'
 
     print('Предложений:', count_sentens)
     print('Слов:', count_words)
@@ -89,3 +107,17 @@ def en_text(text):
     print('Средняя длина предложения в словах:', asl)
     print('Средняя длина слова в слогах:', asw)
     print('Индекс удобочитаемости Флеша:', fre)
+
+    fre = round(fre)
+
+    if fre >= 100:
+        print('Текст читается очень легко')
+    elif fre >= 65:
+        print('Простой для восприятия текст')
+    elif fre >= 30:
+        print('Текст читается сложно')
+    else:
+        print('Очень сложный текст')
+
+    print('Тональность текста:' + polarity)
+    print('Объективность:', subjective, '%')

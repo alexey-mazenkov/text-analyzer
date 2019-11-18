@@ -2,19 +2,25 @@
 # Developers: A.Mazenkov
 #             K.Kravtsov 55%
 #             A.Mikhailov
-import dictionaries
+import dictionaries as dt
 import analysis as al
 
-# TODO(Mkhlva): Здесь должна быть проверка того, на каком языке введён текст.
-text = input()
-cnt = len(text)
-for vowels in dictionaries.vowels_ru:
-    text = text.replace(vowels, '')
-if len(text) == cnt:
+text = input('Введите текст:').lower()
+
+rus = 0
+en = 0
+
+for i in range(len(text)):
+    if text[i] in dt.alp_ru:
+        rus += 1
+    elif text[i] in dt.alp_en:
+        en += 1
+
+print(rus, en)
+if rus > en:
+    al.rus_text(text)
+elif en > rus:
     al.en_text(text)
-else:
-    al.en_text(text)
 
-
-
-
+while rus == en:
+    text = input('Введите текст:')
