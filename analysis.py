@@ -9,53 +9,15 @@ def rus_text(text):
     :param text:
     :return:
     """
-    # Функция для анализа русского текста(модуль dostoevsky).
+    # Function for analyzing Russian text (dostoevsky module).
 
     count_sentens = 0
     count_words = 0
     count_syllables = 0
 
-    for i in range(len(text)):
-        if text[i] == '.' or text[i] == '!' or text[i] == '?':                  # Count sentenses by punctuation mark
-                                                                                # in text.
-            if text[i] == '.' and text[i - 1].isalnum():
-                if not text[i].isalnum():
-                    count_sentens += 1
-            elif text[i] == '.' and not text[i - 1].isalnum():
-                count_sentens += 1
-            elif text[i] == '!' or text[i] == '?':
-                count_sentens += 1
-
-        if text[i] == ' ':                                                      # Count words by space in text.
-            if len(text) - i != 1:
-                if not text[i + 1].isalnum() and not text[i - 1].isalnum:
-                    count_words += 1
-
-        if text[i] in dt.vowels_ru:                                             # Count syllables by vowels in text.
-            count_syllables += 1
-
-    if count_words > 0:
-        count_words += 1
-
-    print('Предложений:', count_sentens)
-    print('Слов:', count_words)
-    print('Слогов:', count_syllables)
-    # print('Средняя длина предложения в словах:', ASL)
-    # print('Индекс удобочитаемости Флеша:', FRE)
-
-
-
-def en_text(text):
-    """
-    :param text:
-    :return:
-    """
-    # Функция для анализа русского текста(модуль textblob).
-
-    count_sentens = 0
-    count_words = 0
-    count_syllables = 0
-
+    # Count sentences for punctuation marks
+    # Count the syllables by vowels
+    # Count the words by the number of spaces
     for i in range(len(text)):
         if text[i] == '.' or text[i] == '!' or text[i] == '?':
             if text[i] == '.' and not text[i - 1] in dt.numbers and text[i - 1] != '.':
@@ -72,57 +34,58 @@ def en_text(text):
     if count_words > 0:
         count_words += 1
 
+    asw = float(count_syllables / count_words)          # Average length of a word in syllables
+    asl = float(count_words / count_sentens)            # Average sentence length in words
+    fre = float(206.835 - 1.015 * asl - 84.6 * asw)     # Flash Readability Index
+
+    print('Предложений:', count_sentens)
+    print('Слов:', count_words)
+    print('Слогов:', count_syllables)
+    print('Средняя длина предложения в словах:', asl)
+    print('Средняя длина слова в слогах:', asw)
+    print('Индекс удобочитаемости Флеша:', fre)
     print('Предложений:', count_sentens)
     print('Слов:', count_words)
     print('Слогов:', count_syllables)
 
 
-def asw(text):
+def en_text(text):
     """
-
     :param text:
     :return:
     """
+    # Function for parsing English text (textblob module).
 
-    sum_len = 0
-    quantity = 0
+    count_sentens = 0
+    count_words = 0
+    count_syllables = 0
 
+    # Count sentences for punctuation marks
+    # Count the syllables by vowels
+    # Count the words by the number of spaces
     for i in range(len(text)):
-        if text[i] in dt.vowels_en:
-            sum_len += 1
-        elif text[i] == ' ' or i == len(text) - 2:
-            quantity += 1
+        if text[i] == '.' or text[i] == '!' or text[i] == '?':
+            if text[i] == '.' and not text[i - 1] in dt.numbers and text[i - 1] != '.':
+                count_sentens += 1
+            elif text[i] == '!' or text[i] == '?':
+                count_sentens += 1
 
-    ASW = float(sum_len / quantity)
-    print('Средняя длина слова в слогах:', ASW)
+        if text[i] == ' ':
+            count_words += 1
 
-def asl(text):
-    """
+        if text[i].lower() in dt.vowels_en:
+            count_syllables += 1
 
-    :param text:
-    :return:
-    """
+    if count_words > 0:
+        count_words += 1
 
-    sum_word = 0
-    sum_sent = 0
+    asw = float(count_syllables / count_words)          # Average length of a word in syllables
+    asl = float(count_words / count_sentens)            # Average sentence length in words
+    fre = float(206.835 - 1.015 * asl - 84.6 * asw)     # Flash Readability Index
 
-    for i in range(len(text)):
-        if text[i] == ' ' and text[i - 1] != '.':
-            sum_word += 1
-        elif text[i] == '.' and not text[i - 1] in dt.numbers and text[i - 1] != '.':
-            sum_sent += 1
-
-    ASL = float(sum_word / sum_sent)
-    print('Средняя длина предложения в словах:', ASL)
-
-
-def fre(ASL, ASW):
-    """
-
-    :param ASL:
-    :param ASW:
-    :return:
-    """
-
-    FRE = float(206.835 - 1.015 * ASL - 84.6 * ASW)
-    print('Индекс удобочитаемости Флеша:', FRE)
+    print('Предложений:', count_sentens)
+    print('Слов:', count_words)
+    print('Слогов:', count_syllables)
+    print('Средняя длина предложения в словах:', asl)
+    print('Средняя длина слова в слогах:', asw)
+    print('Индекс удобочитаемости Флеша:', fre)
