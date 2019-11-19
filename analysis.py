@@ -37,23 +37,23 @@ def rus_text(text):
     asl = float(count_words / count_sentens)             # Average sentence length in words.
     fre = float(206.835 - 1.3 * asl - 60.1 * asw)        # Flash Readability Index.
 
-    print('Предложений:', count_sentens)
-    print('Слов:', count_words)
-    print('Слогов:', count_syllables)
-    print('Средняя длина предложения в словах:', asl)
-    print('Средняя длина слова в слогах:', asw)
-    print('Индекс удобочитаемости Флеша:', fre)
+    print(lc.sent , count_sentens)
+    print(lc.words , count_words)
+    print(lc.syllab, count_syllables)
+    print(lc.aslw, asl)
+    print(lc.awls, asw)
+    print(lc.flash_i, fre)
 
     fre = round(fre)
 
     if fre >= 80:
-        print('Текст очень легко читается (для младших школьников).')
+        print(lc.easy)
     elif fre >= 50:
-        print('Простой текст (для школьников).')
+        print(lc.simple)
     elif fre >= 25:
-        print('Текст немного трудно читать (для студентов).')
+        print(lc.hard)
     else:
-        print('Текст трудно читается (для выпускников ВУЗов).')
+        print(lc.veryhard)
 
 def en_text(text):
     """
@@ -95,29 +95,29 @@ def en_text(text):
     polarity = analysis.sentiment.polarity
 
     if polarity > 0.5:
-        polarity = 'позитивный'
+        polarity = lc.positive
     elif polarity > -0.5:
-        polarity = 'нейтральный'
+        polarity = lc.neutral
     else:
-        polarity = 'негативный'
+        polarity = lc.negative
 
-    print('Предложений:', count_sentens)
-    print('Слов:', count_words)
-    print('Слогов:', count_syllables)
-    print('Средняя длина предложения в словах:', asl)
-    print('Средняя длина слова в слогах:', asw)
-    print('Индекс удобочитаемости Флеша:', fre)
+    print(lc.sent, count_sentens)
+    print(lc.words, count_words)
+    print(lc.syllab, count_syllables)
+    print(lc.aslw, asl)
+    print(lc.awls, asw)
+    print(lc.flash_i, fre)
 
     fre = round(fre)
 
     if fre >= 80:
-        print('Текст очень легко читается (для младших школьников).')
+        print(lc.easy)
     elif fre >= 50:
-        print('Простой текст (для школьников).')
+        print(lc.simple)
     elif fre >= 25:
-        print('Текст немного трудно читать (для студентов).')
+        print(lc.hard)
     else:
-        print('Текст трудно читается (для выпускников ВУЗов).')
+        print(lc.veryhard)
 
-    print('Тональность текста:' + polarity)
-    print('Объективность:', subjective, '%')
+    print(lc.polar + polarity)
+    print(lc.subj , subjective, '%')
